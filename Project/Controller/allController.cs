@@ -18,27 +18,32 @@ namespace Project.Controller
         {
             _context = context;
         }
-        //api/home 
+        //api/all 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> Get()
         {
-            var allProduct = await _context.Products.ToListAsync();
-            return Ok(allProduct);
+            var allProd = _context.Products.Where(prod => prod.StatusProduct == 1).Select
+                (prod => new {prod.ProductsName,prod.CurrentPrice,prod.ProdType}) ; 
+            return Ok(allProd);
         }
+        //get each id 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem(int id)
         {
-            var item = _context.Products.FindAsync(id);
-            if (item != null)
+            var item = _context.Products.Where
+                (prod => prod.Id == id && prod.StatusProduct == 1)
+                .Select(prod => new {prod.ProductsName ,prod.CurrentPrice, prod.ProdType });
+
+            if (item == null)
             {
-                return Ok(item);
+                return NotFound("Khong tim thay");
             }
             else
             {
-                return NotFound();
+                return Ok(item);
             }
         }
-
+        // create new item 
         [HttpPost]
         public async Task<IActionResult> NewProduct([FromBody] Products prod)
         {
@@ -48,7 +53,8 @@ namespace Project.Controller
                 {
                     ProductsName = prod.ProductsName,
                     CurrentPrice = prod.CurrentPrice,
-                    ProdType = prod.ProdType
+                    ProdType = prod.ProdType,
+                    StatusProduct = 1 
                 };
 
                await _context.Products.AddAsync(newProduct);
@@ -60,13 +66,15 @@ namespace Project.Controller
                 return BadRequest(e.Message);
             }
         }
+
+        //delete one item 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try
             {
                 var deleteProduct = await _context.Products.FindAsync(id);
-                _context.Products.Remove(deleteProduct);
+                deleteProduct.StatusProduct = 0;
                 await _context.SaveChangesAsync();
                 return Ok("DeleteSuccess");
             }
@@ -78,6 +86,7 @@ namespace Project.Controller
             }
         }
 
+        //edit 1 item 
         [HttpPost("{id}")]
         public async Task<IActionResult> EditItem (Products product , int id)
         {
