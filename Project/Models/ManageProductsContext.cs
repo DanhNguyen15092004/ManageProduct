@@ -24,6 +24,8 @@ namespace Project.Models
         {
             modelBuilder.Entity<Products>(entity =>
             {
+                entity.Property(e => e.DateCreate).HasColumnType("date");
+
                 entity.Property(e => e.ProdType).IsRequired();
 
                 entity.Property(e => e.ProductsName).IsRequired();

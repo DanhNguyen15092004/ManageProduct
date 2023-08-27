@@ -11,7 +11,7 @@ namespace Project.Models
         public string ProductsName { get; set; }
         public int CurrentPrice { get; set; }
         public string ProdType { get; set; }
-
         public int? StatusProduct { get; set; }
+        public DateTime? DateCreate { get; set; }
     }
 }
