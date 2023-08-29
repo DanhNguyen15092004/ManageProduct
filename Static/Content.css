@@ -1,0 +1,37 @@
+ 
+
+.wrapProductItem {
+    position: absolute;
+    top: 4.9rem;
+    list-style-type: none;
+    width: 100vw;
+    height: 88.9vh;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid;
+    overflow-y: scroll;
+    padding-left:25px ;
+
+}
+
+.ProductItem {
+    height: 10rem;
+    border: 1px solid;
+    width: 20rem;
+    margin: 20px 25px;
+    cursor: pointer;
+    position: absolute;
+}
+
+#ProdProperty{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style-type: none;  
+}
+.prodAttribute{
+    margin-top: 10px;
+    
+
+}
+
