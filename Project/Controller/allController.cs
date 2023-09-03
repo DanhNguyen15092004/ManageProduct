@@ -22,17 +22,20 @@ namespace Project.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> Get()
         {
-            var allProd = _context.Products.Where(prod => prod.StatusProduct == 1).Select
-                (prod => new {prod.ProductsName,prod.CurrentPrice,prod.ProdType}) ; 
+            var allProd = await _context.Products
+        .Where(prod => prod.StatusProduct == 1)
+        .Select(prod => new { prod.ProductsName, prod.CurrentPrice , prod.DateCreate})
+        .ToListAsync();
+
             return Ok(allProd);
-        }
+        }   
         //get each id 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem(int id)
         {
             var item = _context.Products.Where
                 (prod => prod.Id == id && prod.StatusProduct == 1)
-                .Select(prod => new {prod.ProductsName ,prod.CurrentPrice, prod.ProdType });
+                .Select(prod => new {prod.ProductsName ,prod.CurrentPrice, prod.ProdType,prod.DateCreate});
 
             if (item == null)
             {
@@ -54,7 +57,9 @@ namespace Project.Controller
                     ProductsName = prod.ProductsName,
                     CurrentPrice = prod.CurrentPrice,
                     ProdType = prod.ProdType,
-                    StatusProduct = 1 
+                    StatusProduct = 1,
+                    DateCreate = DateTime.Now
+
                 };
 
                await _context.Products.AddAsync(newProduct);
@@ -96,6 +101,7 @@ namespace Project.Controller
                 item.ProductsName = product.ProductsName;
                 item.CurrentPrice = product.CurrentPrice;
                 item.ProdType = product.ProdType;
+                item.DateCreate = DateTime.Now;
              await  _context.SaveChangesAsync();
                 return Ok(item);
             }catch(Exception e)
