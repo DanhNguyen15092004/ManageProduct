@@ -11,10 +11,10 @@ namespace Project.Controller
     [Route("api/[controller]")]
     [ApiController] 
 
-    public class allController : ControllerBase
+    public class productController : ControllerBase
     {
         private readonly ManageProductsContext _context;
-        public allController(ManageProductsContext context)
+        public productController(ManageProductsContext context)
         {
             _context = context;
         }
@@ -47,7 +47,7 @@ namespace Project.Controller
             }
         }
         // create new item 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> NewProduct([FromBody] Products prod)
         {
             try
