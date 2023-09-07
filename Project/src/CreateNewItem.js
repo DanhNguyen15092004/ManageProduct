@@ -27,19 +27,25 @@ document.addEventListener("click", (event) => {
 });
 
 submit.addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    const dataJson = {
-        productsName: prodName.value,
-        currentPrice: parseInt(price.value),
-        prodType: prodType.value
-    };
-
-    await CreateNewItem(dataJson);
-
-    prodName.value = "";
-    price.value = "";
-    prodType.value = "";
+    if(prodName.value != "" &&price.value != "" && prodType.value != "" ){
+        e.preventDefault();
+        formFlag != formFlag;
+        toggleFormVisibility();
+        location.reload();
+        const dataJson = {
+            productsName: prodName.value,
+            currentPrice: parseInt(price.value),
+            prodType: prodType.value
+        };
+        await CreateNewItem(dataJson);
+        prodName.value = "";
+        price.value = "";
+        prodType.value = "";
+    }else{
+        alert("Phải nhập đủ thông tin ");
+        e.preventDefault();
+    }
+  
 });
 
 async function CreateNewItem(dataJson) {
