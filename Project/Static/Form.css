@@ -1,0 +1,40 @@
+.ProductForm
+{
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 400px;
+    height:50vh;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    background-color: lightblue;
+    pointer-events:none;
+    visibility: hidden;
+    z-index: 2;
+}
+
+.productInput ,.submitForm{
+    width: 80%;
+    height: 50px;
+    margin: 10px 0  20px 0 ;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    outline: none;
+    border: none;
+}
+
+.submitForm{
+    cursor: pointer;
+}
+.submitForm:hover{
+    background: linear-gradient(lightblue,lightgreen);
+    color:white;
+    font-weight: 700;
+}
+.productInput:first-child{
+    margin-top: 20px;
+}

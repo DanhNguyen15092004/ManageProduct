@@ -6,6 +6,13 @@
     top: 0;
     left: 0;
     overflow-y: auto;
+    /* Ý tưởng là thằng khi click vào thằng menu thì nó sẽ hiện
+    ra cái menu và cái màn hình nó sẽ tối lại thằng tối lại sẽ 
+    có z-index =1 để thằng menu phải cấp cao nhất 
+
+    Và nếu tắt thì chỉ có 2 cách 1 là click vào thằng menu còn 2 là 
+    click vào thằng sidebar 
+    */
     z-index: 2;
     visibility:hidden;
 }
