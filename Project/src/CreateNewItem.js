@@ -5,7 +5,7 @@
     const prodName = document.querySelector("#prodName");
     const price  = document.querySelector("#price")
     const prodType = document.querySelector("#ProdType")
-    const dataApi =" http://localhost:8080/api/product" ;
+    const dataApi ="http://localhost:8080/api/product" ;
     const valueArray = [];
     let formFlag = false;
     function toggleFormVisibility() {
@@ -19,7 +19,7 @@
     formFlag = !formFlag; 
     }
     createItemButton.addEventListener("click", (event) => {
-    event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan rộng lên document
+    event.stopPropagation(); 
     toggleFormVisibility();
     });
 
@@ -31,6 +31,7 @@
 
         submit.addEventListener("click",(e)=>{
             e.preventDefault();
+
         const dataJson =  
         {
             productsName : prodName.value,
@@ -38,8 +39,10 @@
             prodType : prodType.value
         }
         CreateNewItem(dataJson);
+        prodName.value = "";
+        price.value = "";
+        prodType.value = "";
     })  
-
     async function CreateNewItem (dataJson)
     {
             await fetch(dataApi,{
