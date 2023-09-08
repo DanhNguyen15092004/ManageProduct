@@ -38,3 +38,9 @@
 .productInput:first-child{
     margin-top: 20px;
 }
+
+.CreateLabel{
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 10px;
+}

@@ -25,13 +25,12 @@ document.addEventListener("click", (event) => {
         toggleFormVisibility();
     }
 });
-
 submit.addEventListener("click", async (e) => {
     if(prodName.value != "" &&price.value != "" && prodType.value != "" ){
         e.preventDefault();
         formFlag != formFlag;
         toggleFormVisibility();
-        location.reload();
+       
         const dataJson = {
             productsName: prodName.value,
             currentPrice: parseInt(price.value),
@@ -41,6 +40,7 @@ submit.addEventListener("click", async (e) => {
         prodName.value = "";
         price.value = "";
         prodType.value = "";
+        location.reload();
     }else{
         alert("Phải nhập đủ thông tin ");
         e.preventDefault();
