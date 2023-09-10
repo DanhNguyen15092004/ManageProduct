@@ -9,9 +9,9 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public string ProductsName { get; set; }
-        public int CurrentPrice { get; set; }
+        public string CurrentPrice { get; set; }
         public string ProdType { get; set; }
-        public int? StatusProduct { get; set; }
-        public DateTime? DateCreate { get; set; }
+        public int StatusProduct { get; set; }
+        public DateTime DateCreate { get; set; }
     }
 }
