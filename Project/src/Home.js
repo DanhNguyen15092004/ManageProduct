@@ -55,9 +55,11 @@ async function addProductStructureToHtml(productList) {
        
         wrapProd.appendChild(productElement);
     }
+
+    
     const productItem = document.querySelectorAll(".ProductItem");
     let editButtonCheck = true;
-    async function toggle(OpenEditButton){
+     function toggle(OpenEditButton){
             productItem.forEach(buttons =>{
                  let childEditButtons =  buttons.querySelectorAll(".edit");
 
