@@ -53,3 +53,48 @@
     background: rgb(255, 85, 85);
     color:black;
 }
+
+.wrapButton{
+    display: flex;
+    flex-direction: row;
+}
+.wrapButton > .CreateNewItemButton{
+    margin-right: 10px;
+}
+.edit 
+{
+    padding-left:10px;
+    visibility: hidden;
+}
+
+
+.edit:hover{
+    color: #000;
+}
+
+.inputChangeName {
+    width: 60%;
+    height: 40px;
+    border-radius: 20px;
+    margin-left: 20px ;
+    padding: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    
+}
+.changeNameButton{
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+    margin-left:10px;
+    font-weight: 500;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.changeNameButton:hover{
+    background: #000;
+    color: white;
+    
+}

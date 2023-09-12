@@ -49,7 +49,7 @@
         cursor: pointer;
     }
 
-    .CreateNewItemButton{
+    .CreateNewItemButton, .editButton{
         height: 80%;
         width: 200px;
         display: flex;
@@ -61,16 +61,25 @@
         user-select: none;
         color: #ffffff;
         cursor: pointer;
+        border: none;
     }
     .wrapButton{
         position: absolute;  
         top: 10%;
         right:10%;
         height: 100%;      
+      
     }
 
-    .CreateNewItemButton:hover{
+    .CreateNewItemButton:hover , .editButton:hover{
         background-color: #2980b9;
         color: lightcyan;
     }
+    
+    .closeEditButton {
+        padding-right: 10px ;
+        font-size: 15px;
+        font-weight: 300;
+    }
+
     

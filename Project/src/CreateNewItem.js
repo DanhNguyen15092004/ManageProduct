@@ -5,9 +5,9 @@ const submit = document.querySelector(".submitForm");
 const prodName = document.querySelector("#prodName");
 const price = document.querySelector("#price");
 const prodType = document.querySelector("#ProdType");
-const dataApi = "http://localhost:8080/api/product";
 const valueArray = [];
 let formFlag = false;
+
 
 function toggleFormVisibility() {
     form.style.visibility = formFlag ? "hidden" : "visible";
@@ -33,7 +33,7 @@ submit.addEventListener("click", async (e) => {
        
         const dataJson = {
             productsName: prodName.value,
-            currentPrice: parseInt(price.value),
+            currentPrice: price.value,
             prodType: prodType.value
         };
         await CreateNewItem(dataJson);
@@ -45,12 +45,11 @@ submit.addEventListener("click", async (e) => {
         alert("Phải nhập đủ thông tin ");
         e.preventDefault();
     }
-  
 });
 
 async function CreateNewItem(dataJson) {
     try {
-        const response = await fetch(dataApi, {
+        const response = await fetch("http://localhost:8080/api/product/newItem", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
