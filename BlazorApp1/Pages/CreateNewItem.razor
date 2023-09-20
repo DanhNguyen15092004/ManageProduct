@@ -1,0 +1,75 @@
+﻿   @page "/createItem"
+   @using BlazorApp1.Data
+   @using System.Text.Json
+
+
+
+   <PageTitle>New Item</PageTitle>
+   <h1>Create New Item</h1>
+   <input @bind="name" placeholder ="Nhập tên" type = "text"/>
+   <input @bind= "price" placeholder="Nhập giá tiền" type= "text" />
+   <input @bind="type" placeholder ="Nhập loại" type="text"/>
+   <button @onclick=NewItem>Add new Item </button>
+
+
+
+   @code 
+{
+    [Inject]
+    private HttpClient httpClient { get; set; }
+    public record productCreate(string ProductsName, string CurrentPrice, string ProdType);
+
+    public string name { get; set; }
+
+    public string price { get; set; }
+
+    public  string type { get; set; }
+
+    public async Task<Result> NewItem()
+    {
+        try
+        {
+            var newProduct = new productCreate(name, price, type);  
+
+            var productJson = JsonSerializer.Serialize(newProduct);
+            // Console.WriteLine(newProduct);
+
+            var MyURl = "http://localhost:8080/api/Product/newItem";
+            using var response = await httpClient.PostAsJsonAsync(MyURl, productJson);
+            Console.Write(response);
+            Console.WriteLine(productJson);
+            var article = await response.Content.ReadAsStringAsync();
+            Console.Write(article);
+            // Console.Write(response);
+            if (response.IsSuccessStatusCode)
+            {
+                // Read the response content as a string
+          
+                return new Result { Success = $"{article}" };
+            }
+            else
+            {
+            //     var  prod= new productCreate(name, price, type);
+
+            //     var jsonProd = JsonSerializer.Serialize(prod);
+            //     Console.Write(jsonProd);
+            //       Console.WriteLine(123);
+                // Thực hiện các xử lý khác ở đây nếu gửi không thành công
+                return new Result { Error = new(Message: "Không tạo thành công") };
+
+            }
+           }
+           catch (Exception ex)
+        {
+            Console.WriteLine(456);
+               // Thực hiện các xử lý khác ở đây nếu có lỗi
+               return new Result { Error = new(Message: $"{ex.Message}") };
+           }
+       }
+
+
+
+   }
+
+
+

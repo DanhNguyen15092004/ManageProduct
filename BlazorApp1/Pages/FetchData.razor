@@ -1,0 +1,54 @@
+﻿@*Routing *@
+@page "/fetchdata"
+
+
+@*Import Cái data vào *@
+@using BlazorApp1.Data
+@inject WeatherForecastService ForecastService
+
+<PageTitle>Weather forecast</PageTitle>
+<h1>Weather forecast</h1>
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (forecasts.Ok is false)
+    {
+
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var forecast in forecasts.Data.Products)
+                {
+                    <tr>
+                        <td>@forecast.ProductsName</td>
+                        <td>@forecast.CurrentPrice</td>
+                        <td>@forecast.ProdType</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private Result<ProductList>? forecasts;
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetProducts();
+    }
+}
