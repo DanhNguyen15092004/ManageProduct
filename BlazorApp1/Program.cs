@@ -19,11 +19,10 @@ namespace BlazorApp1
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-           
 
+            builder.Services.AddHttpClient();
             // dùng DI ?? ??ng ký Th?ng WeatherForescastServices
             builder.Services.AddSingleton<WeatherForecastService>();
-            
             // truy c?p DB
 
             builder.Services.AddDbContextFactory<ManageProductsContext>(
