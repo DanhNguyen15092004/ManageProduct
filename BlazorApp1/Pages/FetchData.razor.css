@@ -1,0 +1,6 @@
+﻿.deleteButton:hover {
+    color:red;  
+    user-select:none;
+    text-decoration:underline;
+}
+
