@@ -10,7 +10,7 @@ namespace Project.Models
         public string CurrentPrice { get; set; }
         public string OldPrice { get; set; }
         public DateTime DateChange { get; set; }
-        public int? IdProduct { get; set; }
+        public int IdProduct { get; set; }
         public int Id { get; set; }
         public int StatusHistory { get; set; }
     }

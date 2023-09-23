@@ -3,48 +3,59 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace MyApp.Data.Models;
-
-public partial class ManageProductsContext : DbContext
+namespace Project.Models
 {
-    public ManageProductsContext(DbContextOptions<ManageProductsContext> options)
-        : base(options)
+    public partial class ManageProductsContext : DbContext
     {
-    }
-
-    public virtual DbSet<HistoryPrice> HistoryPrice { get; set; }
-
-    public virtual DbSet<Products> Products { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<HistoryPrice>(entity =>
+        public ManageProductsContext()
         {
-            entity.HasKey(e => e.id).HasName("PK__HistoryP__3213E83F5B7888C6");
+        }
 
-            entity.Property(e => e.CurrentPrice)
-                .IsRequired()
-                .IsUnicode(false);
-            entity.Property(e => e.DateChange).HasColumnType("datetime");
-            entity.Property(e => e.OldPrice)
-                .IsRequired()
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Products>(entity =>
+        public ManageProductsContext(DbContextOptions<ManageProductsContext> options)
+            : base(options)
         {
-            entity.HasKey(e => e.Id).HasName("PK__Products__3214EC0717F14560");
+        }
 
-            entity.Property(e => e.CurrentPrice).IsUnicode(false);
-            entity.Property(e => e.DateCreate).HasColumnType("date");
-            entity.Property(e => e.ProdType).IsRequired();
-            entity.Property(e => e.ProductsName).IsRequired();
-            entity.Property(e => e.StatusProduct).HasDefaultValueSql("((1))");
-        });
+        public virtual DbSet<HistoryPrice> HistoryPrice { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
 
-        OnModelCreatingPartial(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<HistoryPrice>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CurrentPrice)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DateChange).HasColumnType("datetime");
+
+                entity.Property(e => e.IdProduct).HasColumnName("idProduct");
+
+                entity.Property(e => e.OldPrice)
+                    .IsRequired()
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Products>(entity =>
+            {
+                entity.Property(e => e.CurrentPrice).IsUnicode(false);
+
+                entity.Property(e => e.DateCreate).HasColumnType("date");
+
+                entity.Property(e => e.ProdType).IsRequired();
+
+                entity.Property(e => e.ProductsName).IsRequired();
+
+                entity.Property(e => e.StatusProduct).HasDefaultValueSql("((1))");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

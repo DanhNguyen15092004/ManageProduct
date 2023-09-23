@@ -2,21 +2,16 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace MyApp.Data.Models;
-
-public partial class Products
+namespace Project.Models
 {
-    public int Id { get; set; }
-    [Required]
-    public string ProductsName { get; set; }
-    [Required]
-    public string CurrentPrice { get; set; }
-    [Required]  
-    public string ProdType { get; set; }
-
-    public int StatusProduct { get; set; }
-
-    public DateTime DateCreate { get; set; }
+    public partial class Products
+    {
+        public int Id { get; set; }
+        public string ProductsName { get; set; }
+        public string CurrentPrice { get; set; }
+        public string ProdType { get; set; }
+        public int StatusProduct { get; set; }
+        public DateTime DateCreate { get; set; }
+    }
 }
