@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Project.Models;
 using Serilog;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Project
 {
@@ -15,49 +16,62 @@ namespace Project
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+           
 
 
-            builder.Host.UseSerilog((context, configuration) => configuration
-           .ReadFrom.Configuration(context.Configuration));
-            // ... (Các dòng code khác)
+                var builder = WebApplication.CreateBuilder(args);
 
 
-            builder.Services.AddDbContext<ManageProductsContext>(
-                options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
-            );
-
-            builder.Services.AddControllers();
+                builder.Host.UseSerilog((context, configuration) => configuration
+               .ReadFrom.Configuration(context.Configuration));
+                
 
 
 
-            // Add services to the container.
-            builder.Services.AddRazorPages();
+                builder.Services.AddDbContext<ManageProductsContext>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
+                );
+
+                builder.Services.AddControllers();
 
 
-            var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
-            app.UseSerilogRequestLogging();
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+                builder.Services.AddCors(
+                 option => option.AddDefaultPolicy(builder =>
+                 {
+                     builder.WithOrigins("http://127.0.0.1:5500", "https://a7686e0c.manageproduct.pages.dev").AllowAnyMethod()
+                     .AllowAnyHeader().AllowCredentials(); ;
+                 }
+                 )
+                 );
 
-            app.UseRouting();
-            app.UseAuthorization();
 
-            // Configure routing and controllers here, outside of the environment check.
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapRazorPages();
-            });
+                builder.Services.AddRazorPages();
 
-            app.Run();
-        }
+                var app = builder.Build();
+
+                // Configure the HTTP request pipeline.
+                if (!app.Environment.IsDevelopment())
+                {
+                    app.UseExceptionHandler("/Error");
+                    app.UseHsts();
+                }
+                app.UseCors();
+                app.UseSerilogRequestLogging();
+                app.UseHttpsRedirection();
+                app.UseStaticFiles();
+
+                app.UseRouting();
+                app.UseAuthorization();
+
+                // Configure routing and controllers here, outside of the environment check.
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                    endpoints.MapRazorPages();
+                });
+
+                app.Run();
+            }     
     }
 }
