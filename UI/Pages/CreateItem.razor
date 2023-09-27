@@ -1,0 +1,74 @@
+﻿@page "/CreateItem"
+@using UI.Data
+@using System.Net.Http
+@using Newtonsoft.Json
+@using System.Text
+@using System.Net.Http.Headers;
+
+@inject HttpClient HttpClient
+
+<PageTitle>New Item</PageTitle> 
+<h1>Create New Item</h1>
+<input @bind="name" placeholder="Nhập tên" type="text" />
+<input @bind="price" placeholder="Nhập giá tiền" type="text" />
+<input @bind="type" placeholder="Nhập loại" type="text" />
+<p>@message</p>
+<p>@debugMessage</p>
+
+<button @onclick=NewItem>Add new Item</button>
+
+@code
+{
+    public record ProductCreate(string ProductsName, string CurrentPrice, string ProdType);
+
+    public string name { get; set; }
+    public string price { get; set; }
+    public string type { get; set; }
+    public string message { get; set; }
+    public string debugMessage{get;set;}
+
+    public async Task NewItem()
+    {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(price) || string.IsNullOrWhiteSpace(type))
+        {
+            message = "Hãy nhập đầy đủ thông tin";
+            return; // Exit the method early if there's missing information
+        }
+
+        var newProduct = new ProductCreate(name, price, type);
+
+        var productJson = JsonConvert.SerializeObject(newProduct);
+
+        var apiUrl = "http://localhost:8080/api/Product/newItem";
+
+        try
+        {
+            
+
+
+            var content = new StringContent(productJson, Encoding.UTF8, "application/json");
+            var response = await HttpClient.PostAsync(apiUrl, content);
+
+
+
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            debugMessage = jsonResponse;    
+            var convertToString = JsonConvert.DeserializeObject<Result>(jsonResponse);
+
+            if (response.IsSuccessStatusCode)
+            {
+                message = "Tạo sản phẩm thành công";
+            }
+            else
+            {
+                message = $"Có lỗi xảy ra khi tạo sản phẩm: {convertToString.Error}";
+            }
+
+        }
+        catch (HttpRequestException)
+        {
+            message = "Không thể kết nối đến máy chủ.";
+        }
+    }
+}
